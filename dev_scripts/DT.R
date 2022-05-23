@@ -8,8 +8,8 @@ library(readr)
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
 
-#data <- read_csv("portfolio_screenshot.csv")
-data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1)
+data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE)
+#data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1)
 #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" 
 #"Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
 headers <- colnames(data)
@@ -54,9 +54,8 @@ formatStyle("PnL_perc", background = styleColorBar(data$PnL_perc, 'lightblue'),
                      backgroundSize = '98% 95%',
                      backgroundRepeat = 'no-repeat',
                      backgroundPosition = 'right') %>% 
-  
 formatCurrency("Value", "€", digits = 0) %>% 
-formatRound(c("PRU","PnL."), digits = 1) %>% 
+formatRound(c("PRU","PnL"), digits = 1) %>% 
 formatPercentage(c("Value_perc","PnL_perc","DIV_yield"), digits = 1)
 
 
