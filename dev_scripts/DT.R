@@ -1,11 +1,14 @@
 library(DT)
 library(xlsx)
 library(htmltools)
+library(readr)
+
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
 
+#data <- read_csv("portfolio_screenshot.csv")
 data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1)
 #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" 
 #"Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
