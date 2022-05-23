@@ -1,0 +1,6 @@
+Ticker,Name,Account,CCY,Quantity,PRU,Price,Value,Value_perc,PnL ,PnL_perc,Strategy1,Strategy2,Factor,PE,PB,FPE,DIV_yield
+AAPL,Apple,PEA,USD,5,50.25,55,275,0.5,45,0.105465,Tech,Income,Growth,5,1,12.12,5%
+GOOG,Google,CT,USD,6,45.5664,49,294,0.5,95,0.056598,Income,,Growth,12,1.23,15.21,4.50%
+GOOGD,Google,CT,USD,45,555,49,2205,0.5,95,0.15,Income,,Growth,12,1.23,15.21,4.50%
+GOOGTR,Google,CT,USD,45,555,49,2205,0.5,95,-0.12,Income,,Growth,12,1.23,15.21,4.50%
+AAPL,Apple,PEA,USD,5,50.25,55,275,0.5,45,-0.078,Tech,Income,Growth,5,1,12.12,5%
