@@ -1,20 +1,18 @@
-library(DT)
-library(xlsx)
-library(htmltools)
-library(readr)
+require(DT)
+require(xlsx)
+require(htmltools)
+require(readr)
 
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
 
-data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE)
-#data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1)
-#"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" 
-#"Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
+#------------------------------------------------- DATA ------------------------------------------------------------
+data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE) # data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1) #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" "Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
 headers <- colnames(data)
 col_border <- c("PRU","PnL_perc","DIV_yield")
-#------------------------------------------------- JS for headers where eq(x) is the header to target------- format headers
+#------------------------------------------------- JS Headers Formating --------------------------------------------eq(x) is the header position to target----
 headjs <- "function(thead) {
   $(thead).closest('thead').find('th').eq(0).css({'background-color': '#91C1D5', 'border-right': 'solid 1px'});
    $(thead).closest('thead').find('th').eq(1).css({'background-color': '#C0B1ED', 'border-right': 'solid 1px'});
@@ -25,8 +23,7 @@ headjs <- "function(thead) {
    $(thead).closest('thead').find('th').eq(20).css('border-right', 'solid 1px');
 
 }"
-
-#----------------------------------------------------- a custom table container-------------- create headers
+#------------------------------------------------- Create Headers ---------------------------------------------------custom table container----
 sketch = htmltools::withTags(table(
   class = 'display',
   thead(
@@ -36,19 +33,15 @@ sketch = htmltools::withTags(table(
       th(colspan = 7, "Additional")
     ),
     tr(
-        lapply(headers, th)
-        #th(style = "border-right: solid 1px;", "PRU")
+        lapply(headers, th) #th(style = "border-right: solid 1px;", "PRU")
     )
   )
 ))
 #print(sketch)sdf
-#-----------------------------------------------------
+#------------------------------------------------- DT ---------------------------------------------------------------
 datatable(data,
-          options = list(pageLength = 50, headerCallback = JS(headjs), searching = FALSE),
-          rownames = FALSE,filter = "bottom",
-          #width = NULL,
-          #height = NULL,
-          container = sketch) %>% 
+          options = list(pageLength = 50, headerCallback = JS(headjs), searching = TRUE, dom = "ltipr"), #dom = "ltipr in order to remove the search bar at the top but keep the search fucntionality
+          rownames = FALSE, filter = "bottom", container = sketch) %>% 
 formatStyle(match(col_border,headers), `border-right` = "solid 1px") %>%
 formatStyle("PnL_perc", background = styleColorBar(data$PnL_perc, 'lightblue'),
                      backgroundSize = '98% 95%',
