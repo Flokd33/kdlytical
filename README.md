@@ -1,8 +1,8 @@
-# kdlytical
+# kdlytical <br /> <br />
 
-Multi task app covering:
--Portfolio Analytics (positions, allocation, optimisation, trades, PnL ...)
--Market data
--Wealth Monitoring (aggregated wealth..)
--Technical Analysis & Regressions
--Gold screening (web scrapping)
+Multi task app covering: <br />
+-Portfolio Analytics (positions, allocation, optimisation, trades, PnL ...) <br />
+-Market data <br />
+-Wealth Monitoring (aggregated wealth..) <br />
+-Technical Analysis & Regressions <br />
+-Gold screening (web scrapping) <br />
