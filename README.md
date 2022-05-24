@@ -7,4 +7,4 @@ Multi task app covering:                                                       <
 - Technical Analysis & Regressions                                             <br />
 - Gold screening (web scrapping)                                               <br />
 
-Run App with =>  shiny::runGitHub( "Flokd33/kdlytical", username = "Flokd33") 
+Run App with =>  shiny::runGitHub( "Flokd33/kdlytical", username = "Flokd33", subdir = "app") => in the App folder, app.R or ui.R + server.R requeried
