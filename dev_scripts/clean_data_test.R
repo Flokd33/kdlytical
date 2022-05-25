@@ -1,4 +1,4 @@
 
 divide_by_two <- function(x) {
-  return(x/2)
+  return(x/20)
 }
