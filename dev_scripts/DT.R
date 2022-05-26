@@ -2,7 +2,7 @@ require(DT)
 require(xlsx)
 require(htmltools)
 require(readr)
-
+source("dev_scripts/clean_data_test.R")
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
@@ -51,7 +51,7 @@ formatCurrency("Value", "€", digits = 0) %>%
 formatRound(c("PRU","PnL"), digits = 1) %>% 
 formatPercentage(c("Value_perc","PnL_perc","DIV_yield"), digits = 1)
 
-
+divide_by_two(4)
 
 
 
