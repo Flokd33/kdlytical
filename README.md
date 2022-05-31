@@ -7,4 +7,12 @@ Multi task app covering:                                                       <
 - Technical Analysis & Regressions                                             <br />
 - Gold screening (web scrapping)                                               <br />
 
-Run App with =>  shiny::runGitHub( "Flokd33/kdlytical", username = "Flokd33", subdir = "app") => in the App folder, app.R or ui.R + server.R requeried 
+Run App with =>  shiny::runGitHub( "Flokd33/kdlytical", username = "Flokd33", subdir = "app") => in the App folder, app.R or ui.R + server.R requeried
+
+
+ui -> textOutput("clicked")
+server -> 
+  output$clicked <- renderPrint(
+    input$table_cell_clicked
+  )
+  table is the name of the output
