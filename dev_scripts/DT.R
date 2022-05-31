@@ -2,11 +2,12 @@ require(DT)
 require(xlsx)
 require(htmltools)
 require(readr)
-source("dev_scripts/clean_data_test.R")
+source("dev_scripts/fct_summary.R")
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
+#CMD + .
 
 #------------------------------------------------- DATA ------------------------------------------------------------
 data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE) # data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1) #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" "Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
@@ -20,7 +21,7 @@ headjs <- "function(thead) {
    
    $(thead).closest('thead').find('th').eq(8).css('border-right', 'solid 1px');
    $(thead).closest('thead').find('th').eq(13).css('border-right', 'solid 1px');
-   $(thead).closest('thead').find('th').eq(20).css('border-right', 'solid 1px');
+   $(thead).closest('thead').find('th').eq(22).css('border-right', 'solid 1px');
 
 }"
 #------------------------------------------------- Create Headers ---------------------------------------------------custom table container----
@@ -30,7 +31,7 @@ sketch = htmltools::withTags(table(
     tr(
       th(colspan = 6, "Static"),
       th(colspan = 5, "Performance"),
-      th(colspan = 7, "Additional")
+      th(colspan = 9, "Additional")
     ),
     tr(
         lapply(headers, th) #th(style = "border-right: solid 1px;", "PRU")
@@ -38,7 +39,7 @@ sketch = htmltools::withTags(table(
   )
 ))
 #print(sketch)sdf
-#------------------------------------------------- DT ---------------------------------------------------------------
+#------------------------------------------------- DT positions ---------------------------------------------------------------
 datatable(data,
           options = list(pageLength = 50, headerCallback = JS(headjs), searching = TRUE, dom = "ltipr"), #dom = "ltipr in order to remove the search bar at the top but keep the search fucntionality
           rownames = FALSE, filter = "bottom", container = sketch) %>% 
@@ -51,10 +52,7 @@ formatCurrency("Value", "€", digits = 0) %>%
 formatRound(c("PRU","PnL"), digits = 1) %>% 
 formatPercentage(c("Value_perc","PnL_perc","DIV_yield"), digits = 1)
 
-divide_by_two(4)
-
-
-
-
+#------------------------------------------------- DT summary---------------------------------------------------------------
+datatable(fct_summary(data))
 
 
