@@ -7,7 +7,7 @@ source("dev_scripts/fct_summary.R")
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
-#CMD + .
+#data represent postions + market data 
 
 #------------------------------------------------- DATA ------------------------------------------------------------
 data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE) # data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1) #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" "Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
