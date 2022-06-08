@@ -3,15 +3,21 @@ require(xlsx)
 require(htmltools)
 require(readr)
 source("dev_scripts/fct_summary.R")
+source("dev_scripts/fct_marketdata.R")R
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
 #https://htmlcolorcodes.com/fr/
-#data represent postions + market data 
 
 #------------------------------------------------- DATA ------------------------------------------------------------
-data <- read_csv("data_portfolio.csv", col_names = TRUE,show_col_types = FALSE) # data <- read.xlsx("C:/Users/fcadet/Documents/Florian/R/portfolio_screenshot.xlsx", sheetIndex = 1) #"Ticker"     "Name"       "Account"    "CCY"        "Quantity"   "PRU"        "Price"      "Value"      "Value_perc" "PnL."       "PnL_perc"   "Strategy1" "Strategy2"  "Factor"     "PE"         "PB"         "FPE"        "DIV_yield" 
-headers <- colnames(data)
+data_positions_raw <- read_csv("data_positions.csv", col_names = TRUE, show_col_types = FALSE) # for now it has market data but need to change this. Poistion only has Ticker Name Account CCY Quantity PRU and Strategies
+data_trades_raw <- read_csv("data_trades.csv", col_names = TRUE, show_col_types = FALSE)
+data_market <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
+data_prices <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
+data_dividends <- fct_marketdata_dividend_history_yahoo(data_positions_raw$Ticker)
+data_positions_enrich <- fct_enrich_positions(data_positions_raw,data_market)
+
+headers <- colnames(data_positions_raw)
 col_border <- c("PRU","PnL_perc","DIV_yield")
 #------------------------------------------------- JS Headers Formating --------------------------------------------eq(x) is the header position to target----
 headjs <- "function(thead) {
@@ -40,11 +46,11 @@ sketch = htmltools::withTags(table(
 ))
 #print(sketch)sdf
 #------------------------------------------------- DT positions ---------------------------------------------------------------
-datatable(data,
+datatable(data_positions_raw,
           options = list(pageLength = 50, headerCallback = JS(headjs), searching = TRUE, dom = "ltipr"), #dom = "ltipr in order to remove the search bar at the top but keep the search fucntionality
           rownames = FALSE, filter = "bottom", container = sketch) %>% 
 formatStyle(match(col_border,headers), `border-right` = "solid 1px") %>%
-formatStyle("PnL_perc", background = styleColorBar(data$PnL_perc, 'lightblue'),
+formatStyle("PnL_perc", background = styleColorBar(data_positions_raw$PnL_perc, 'lightblue'),
                      backgroundSize = '98% 95%',
                      backgroundRepeat = 'no-repeat',
                      backgroundPosition = 'right') %>% 
@@ -53,6 +59,4 @@ formatRound(c("PRU","PnL"), digits = 1) %>%
 formatPercentage(c("Value_perc","PnL_perc","DIV_yield"), digits = 1)
 
 #------------------------------------------------- DT summary---------------------------------------------------------------
-datatable(fct_summary(data))
-
-
+datatable(fct_summary(data_positions_raw))
