@@ -2,8 +2,11 @@ require(DT)
 require(xlsx)
 require(htmltools)
 require(readr)
-source("dev_scripts/fct_summary.R")
-source("dev_scripts/fct_marketdata.R")R
+source("dev_scripts/fct_summary_positions.R")
+source("dev_scripts/fct_summary_inventory.R")
+source("dev_scripts/fct_marketdata.R")
+source("dev_scripts/fct_enrich_positions.R")
+source("dev_scripts/x")
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
@@ -12,10 +15,15 @@ source("dev_scripts/fct_marketdata.R")R
 #------------------------------------------------- DATA ------------------------------------------------------------
 data_positions_raw <- read_csv("data_positions.csv", col_names = TRUE, show_col_types = FALSE) # for now it has market data but need to change this. Poistion only has Ticker Name Account CCY Quantity PRU and Strategies
 data_trades_raw <- read_csv("data_trades.csv", col_names = TRUE, show_col_types = FALSE)
+data_allocation_strategy <- read_csv("data_allocation_strategy.csv", col_names = TRUE, show_col_types = FALSE)
+data_metals_inventory <- read_csv("data_metals_inventory.csv", col_names = TRUE, show_col_types = FALSE)
+
 data_market <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
 data_prices <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
 data_dividends <- fct_marketdata_dividend_history_yahoo(data_positions_raw$Ticker)
-data_positions_enrich <- fct_enrich_positions(data_positions_raw,data_market)
+
+data_positions_enriched <- fct_enrich_positions(data_positions_raw,data_market,data_allocation_strategy)
+data_inventory_enriched <- fct_enrich_inventory(data_metals_inventory)
 
 headers <- colnames(data_positions_raw)
 col_border <- c("PRU","PnL_perc","DIV_yield")
@@ -37,7 +45,7 @@ sketch = htmltools::withTags(table(
     tr(
       th(colspan = 6, "Static"),
       th(colspan = 5, "Performance"),
-      th(colspan = 9, "Additional")
+      th(colspan = 9, "Market Data")
     ),
     tr(
         lapply(headers, th) #th(style = "border-right: solid 1px;", "PRU")
