@@ -6,7 +6,7 @@ source("dev_scripts/fct_summary_positions.R")
 source("dev_scripts/fct_summary_inventory.R")
 source("dev_scripts/fct_marketdata.R")
 source("dev_scripts/fct_enrich_positions.R")
-source("dev_scripts/x")
+source("dev_scripts/fct_enrich_inventory.R")
 #at work version 3.6.1
 #https://rstudio.github.io/DT/
 #https://rstudio.github.io/DT/010-style.html
