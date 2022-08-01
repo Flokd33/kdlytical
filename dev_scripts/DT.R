@@ -18,9 +18,9 @@ data_trades_raw <- read_csv("data_trades.csv", col_names = TRUE, show_col_types 
 data_allocation_strategy <- read_csv("data_allocation_strategy.csv", col_names = TRUE, show_col_types = FALSE)
 data_metals_inventory <- read_csv("data_metals_inventory.csv", col_names = TRUE, show_col_types = FALSE)
 
-data_market <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
-data_prices <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker)
-data_dividends <- fct_marketdata_dividend_history_yahoo(data_positions_raw$Ticker)
+data_market <- fct_marketdata_positions_yahoo(data_positions_raw$Ticker)
+data_prices <- fct_marketdata_price_history_yahoo(data_positions_raw$Ticker, "1997-12-31", "2022-06-30")
+data_dividends <- fct_marketdata_dividend_history_yahoo(data_positions_raw$Ticker,"1997-12-31", "2022-06-30")
 
 data_positions_enriched <- fct_enrich_positions(data_positions_raw,data_market,data_allocation_strategy)
 data_inventory_enriched <- fct_enrich_inventory(data_metals_inventory)
@@ -52,7 +52,7 @@ sketch = htmltools::withTags(table(
     )
   )
 ))
-#print(sketch)sdf
+#print(sketch)
 #------------------------------------------------- DT positions ---------------------------------------------------------------
 datatable(data_positions_raw,
           options = list(pageLength = 50, headerCallback = JS(headjs), searching = TRUE, dom = "ltipr"), #dom = "ltipr in order to remove the search bar at the top but keep the search fucntionality
